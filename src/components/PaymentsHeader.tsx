@@ -41,6 +41,7 @@ export const PaymentsHeader = () => {
             onChange={(e) => {
               setTempCurrency(e.target.value);
             }}
+            value={currencyValue}
           >
           <option value="">{I18N.EMPTY_CURRENCY}</option>
           {CURRENCIES.map((currency) => {
@@ -65,6 +66,7 @@ export const PaymentsHeader = () => {
             onClick={() => {
               clearSearch();
               setTempValue('');
+              setTempCurrency('');
             }}
           >{I18N.CLEAR_FILTERS}</DefaultButton>
         )}
