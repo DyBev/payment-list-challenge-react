@@ -56,6 +56,7 @@ export const PaymentsHeader = () => {
           onClick={() => {
             setSearchValue("paymentID", searchValue)
             setSearchValue("currency", currencyValue)
+            setSearchValue("page", "1")
           }}
         >{I18N.SEARCH_BUTTON}</SearchButton>
 

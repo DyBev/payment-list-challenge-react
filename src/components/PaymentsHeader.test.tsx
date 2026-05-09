@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 type SearchCache = {
   paymentID: string,
   currency: string,
+  page: string,
 }
 
 describe('PaymentsHeader', () => {
@@ -56,6 +57,7 @@ describe('PaymentsHeader', () => {
     const cachedData = queryClient.getQueryData(['search'])
     expect((cachedData as SearchCache).paymentID).toEqual('react testing');
     expect((cachedData as SearchCache).currency).toEqual('USD');
+    expect((cachedData as SearchCache).page).toEqual('1');
   });
 
   it('should only render the clear-filters button when there is an active search', async () => {
