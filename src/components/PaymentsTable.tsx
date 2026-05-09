@@ -1,7 +1,9 @@
 import Recat from 'react';
 import {
+  FlexRow,
   PaginationButton,
   PaginationRow,
+  Spinner,
   StatusBadge,
   Table,
   TableBodyWrapper,
@@ -21,7 +23,11 @@ export const PaymentsTable = () => {
   const { data, isLoading, error } = usePayments()
 
   if (isLoading) {
-    return "LOADING ..."
+    return (
+      <FlexRow>
+        <Spinner />
+      </FlexRow>
+    );
   }
 
   const {
@@ -70,6 +76,7 @@ export const PaymentsTable = () => {
             </TableBodyWrapper>
           </Table>
         </TableWrapper>
+
         {total > pageSize && (
           <PaginationRow>
             <PaginationButton disabled={page === 1} onClick={() => setSearchValue('page', String(page - 1))}>
@@ -94,6 +101,7 @@ export const PaymentsTable = () => {
             </PaginationButton>
           </PaginationRow>
         )}
+
       </>
     )}
     </ErrorHandling>

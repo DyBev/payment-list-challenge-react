@@ -30,7 +30,8 @@ export const FlexRow = styled.div`
   @media (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
