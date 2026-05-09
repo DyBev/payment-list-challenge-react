@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "npm install && vitest run",
+    "test": "npm install && vitest run --coverage",
     "test:coverage": "vitest run --coverage",
     "test:step1": "vitest -t \"Step 1:\"",
     "test:step2": "vitest -t \"Step 2:\"",

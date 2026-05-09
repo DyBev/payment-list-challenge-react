@@ -6,18 +6,13 @@ export const usePayments = () => {
   const { data: searchData } = useSearchValue();
   const { status, fetchStatus, data, error } = useQuery({
     queryKey: ['payments', ...Object.values(searchData || {}).filter((value) => !!value)],
-    queryFn: getPaymentData({ 
+    queryFn: getPaymentData({
       paymentID: searchData?.paymentID || '',
       currency: searchData?.currency || '',
       page: searchData?.page || 1,
     }),
+    staleTime: 1000 * 60 * 5
   })
-
-  if (fetchStatus === 'idle' && status === 'pending') {
-    return {
-      isLoading: false,
-    }
-  }
 
   if (status === 'pending' || fetchStatus === 'fetching') {
     return {

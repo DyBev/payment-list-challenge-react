@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { delay, http, HttpResponse } from "msw";
 import {
   mockPayments123,
   mockPayments000,
@@ -32,6 +32,7 @@ export const handlers = [
     const currency = url.searchParams.get("currency") || "";
     const page = parseInt(url.searchParams.get("page") || "1", 10);
     const pageSize = parseInt(url.searchParams.get("pageSize") || "10", 10);
+    await delay(700);
 
     if (search === "pay_404") {
       return HttpResponse.json(
