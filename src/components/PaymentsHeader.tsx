@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { FilterRow, SearchButton, SearchInput, Title } from './components';
+import { DefaultButton, FilterRow, SearchButton, SearchInput, Title } from './components';
 import { I18N } from "../constants/i18n";
 import { useSearchValue } from '../hooks/useSearchValue';
 
 export const PaymentsHeader = () => {
   const {
+    data,
     setSearchValue,
+    clearSearch,
+    isClear,
   } = useSearchValue();
-  const [searchValue, setTempValue] = useState('');
+  const [searchValue, setTempValue] = useState(data?.paymentID || '');
 
   return (
     <>
@@ -20,12 +23,21 @@ export const PaymentsHeader = () => {
           onChange={(e) => {
             setTempValue(e.target.value)
           }}
+          value={searchValue}
         />
         <SearchButton
           onClick={() => {
             setSearchValue("paymentID", searchValue)
           }}
         >{I18N.SEARCH_BUTTON}</SearchButton>
+        {!isClear && (
+          <DefaultButton
+            onClick={() => {
+              clearSearch();
+              setTempValue('');
+            }}
+          >{I18N.CLEAR_FILTERS}</DefaultButton>
+        )}
       </FilterRow>
     </>
   );

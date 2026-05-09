@@ -122,15 +122,19 @@ describe("App - Step 3: Clear Filters", () => {
   test("should clear all filters when clear button is clicked", async () => {
     render(<App />);
 
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
+
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });
 
     // Perform a search
-    fireEvent.change(searchInput, { target: { value: "pay_134_1" } });
+    fireEvent.change(searchInput, { target: { value: "pay_205_1" } });
     fireEvent.click(searchButton);
 
     await waitFor(() => {
-      expect(screen.getByText("pay_134_1")).toBeInTheDocument();
+      expect(screen.getByText("pay_205_1")).toBeInTheDocument();
     });
 
     // Clear filters
