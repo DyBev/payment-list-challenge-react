@@ -12,5 +12,13 @@ export interface Payment {
     description: string,
 }
 
+interface PaymentResponse extends Payment {
+  clientId: string,
+}
+
 export interface PaymentSearchResponse {
+  payments: PaymentResponse[]
+  total: number,
+  page: number,
+  pageSize: number
 }
