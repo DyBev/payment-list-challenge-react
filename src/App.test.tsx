@@ -72,8 +72,6 @@ afterEach(() => server.resetHandlers());
 
 describe("App - Step 1: Basic Payment List", () => {
   test("should fetch and display payments in a table with page=1 and pageSize=5", async () => {
-    render(<App />);
-
     // Wait for the table to load with data cells
     await waitFor(() => {
       expect(screen.getByRole("table")).toBeInTheDocument();
@@ -95,8 +93,12 @@ describe("App - Step 1: Basic Payment List", () => {
 });
 
 describe("App - Step 2: Search by Payment ID", () => {
-  test("should have a search input for payment ID", () => {
+  test("should have a search input for payment ID", async () => {
     render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
 
     const searchInput = getSearchInput();
     expect(searchInput).toBeInTheDocument();
@@ -105,6 +107,14 @@ describe("App - Step 2: Search by Payment ID", () => {
 
   test("should search for payments by payment ID", async () => {
     render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });
@@ -166,12 +176,6 @@ describe("App - Step 4: Handle Payment Not Found", () => {
 
 describe("App - Step 5: Handle Server Error", () => {
   test("should display error message when API returns 500", async () => {
-    render(<App />);
-
-    await waitFor(() => {
-      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
-    })
-
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });
 
@@ -183,8 +187,12 @@ describe("App - Step 5: Handle Server Error", () => {
 });
 
 describe("App - Step 6: Currency Filter", () => {
-  test("should have a currency filter dropdown", () => {
+  test("should have a currency filter dropdown", async () => {
     render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
 
     const currencySelect = screen.getByRole("combobox", { name: I18N.CURRENCY_FILTER_LABEL });
     expect(currencySelect).toBeInTheDocument();
@@ -192,6 +200,10 @@ describe("App - Step 6: Currency Filter", () => {
 
   test("should filter payments by currency when selected", async () => {
     render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
 
     const currencySelect = screen.getByRole("combobox", { name: I18N.CURRENCY_FILTER_LABEL });
 
@@ -207,6 +219,10 @@ describe("App - Step 6: Currency Filter", () => {
 describe("App - Step 7: Combined Currency and Payment ID Filter", () => {
   test("should filter by both currency and payment ID", async () => {
     render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });
@@ -232,6 +248,10 @@ describe("App - Step 8: Pagination", () => {
     render(<App />);
 
     await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
+
+    await waitFor(() => {
       expect(screen.getByRole("table")).toBeInTheDocument();
       expect(screen.getAllByRole("cell").length).toBeGreaterThan(0);
     });
@@ -243,6 +263,10 @@ describe("App - Step 8: Pagination", () => {
 
   test("should disable previous button on first page", async () => {
     render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
 
     await waitFor(() => {
       expect(screen.getByRole("table")).toBeInTheDocument();

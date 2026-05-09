@@ -6,10 +6,9 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { I18N } from '../constants/i18n.ts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// This is required for tests to pass if ReactQuery is used
-// you don't have to use this library in your solution.
 type SearchCache = {
   paymentID: string,
+  currency: string,
 }
 
 describe('PaymentsHeader', () => {
@@ -37,10 +36,17 @@ describe('PaymentsHeader', () => {
   })
 
   it('should update the cached search value when search is pressed', () => {
-    const searchInput = screen.getByLabelText(/search payments/i);
+    const searchInput = screen.getByLabelText(I18N.SEARCH_LABEL);
     fireEvent.input(searchInput, {
       target: {
         value: 'react testing',
+      },
+    });
+
+    const currencySelect = screen.getByLabelText(I18N.CURRENCY_FILTER_LABEL);
+    fireEvent.change(currencySelect, {
+      target: {
+        value: 'USD',
       },
     });
 
@@ -49,6 +55,7 @@ describe('PaymentsHeader', () => {
 
     const cachedData = queryClient.getQueryData(['search'])
     expect((cachedData as SearchCache).paymentID).toEqual('react testing');
+    expect((cachedData as SearchCache).currency).toEqual('USD');
   });
 
   it('should only render the clear-filters button when there is an active search', async () => {
@@ -62,11 +69,19 @@ describe('PaymentsHeader', () => {
       },
     });
 
+    const currencySelect = screen.getByLabelText(I18N.CURRENCY_FILTER_LABEL);
+    fireEvent.change(currencySelect, {
+      target: {
+        value: 'USD',
+      },
+    });
+
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });
     fireEvent.click(searchButton)
 
     let cachedData = queryClient.getQueryData(['search'])
     expect((cachedData as SearchCache).paymentID).toEqual('react testing');
+    expect((cachedData as SearchCache).currency).toEqual('USD');
 
     await waitFor(() => {
       clearFiltersButton = screen.queryByRole('button', { name: /clear filters/i });
@@ -79,5 +94,6 @@ describe('PaymentsHeader', () => {
 
     cachedData = queryClient.getQueryData(['search'])
     expect((cachedData as SearchCache).paymentID).toEqual('');
+    expect((cachedData as SearchCache).currency).toEqual('');
   });
 })

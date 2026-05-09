@@ -4,10 +4,12 @@ import { useSearchValue } from "./useSearchValue";
 
 export const usePayments = () => {
   const { data: searchData } = useSearchValue();
-  console.log('searchData', searchData, searchData?.paymentID, ['payments', searchData?.paymentID || '']);
   const { status, fetchStatus, data, error } = useQuery({
-    queryKey: ['payments', searchData?.paymentID || ''],
-    queryFn: getPaymentData({ paymentID: searchData?.paymentID || '' }),
+    queryKey: ['payments', ...Object.values(searchData || {}).filter((value) => !!value)],
+    queryFn: getPaymentData({ 
+      paymentID: searchData?.paymentID || '',
+      currency: searchData?.currency || '',
+    }),
   })
 
   if (fetchStatus === 'idle' && status === 'pending') {

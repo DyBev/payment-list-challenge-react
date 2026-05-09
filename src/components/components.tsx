@@ -14,6 +14,13 @@ export const Title = styled.h2`
   margin-bottom: 1.5rem;
 `;
 
+export const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: fit-content;
+`;
+
 export const FlexRow = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,7 +30,7 @@ export const FlexRow = styled.div`
   @media (min-width: 768px) {
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
   }
 `;
 
@@ -35,7 +42,7 @@ export const FilterRow = styled.div`
 
   @media (min-width: 768px) {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     gap: 1rem;
   }
 `;
@@ -66,6 +73,7 @@ export const Select = styled.select`
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   outline: none;
   cursor: pointer;
+  min-height: 42px;
 
   &:focus {
     border-color: rgb(61, 70, 83);

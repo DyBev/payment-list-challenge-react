@@ -6,6 +6,7 @@ export const useSearchValue = () => {
     queryKey: ['search'],
     queryFn: () => ({
       paymentID: '',
+      currency: '',
     }),
   })
 
@@ -17,9 +18,12 @@ export const useSearchValue = () => {
   };
 
   const clearSearch = () => {
-    queryClient.setQueryData(['search'], {
-      paymentID: '',
-    });
+    queryClient.setQueryData(['search'], (oldData: Record<string, string>) => 
+      Object.keys(oldData).reduce((acc, key) => ({
+        ...acc,
+        [key]: '',
+      }), {})
+    );
   }
 
   const isClear = Object.values(data || {}).reduce((acc, value) => (acc && value === ''), true)
