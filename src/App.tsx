@@ -5,7 +5,7 @@ import { PaymentsPage } from "./components/PaymentsPage";
 
 // This is required for tests to pass if ReactQuery is used
 // you don't have to use this library in your solution.
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       // disable retries is required for tests to pass if ReactQuery is used

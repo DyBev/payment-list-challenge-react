@@ -4,11 +4,14 @@ export const useSearchValue = () => {
   const queryClient = useQueryClient();
   const { data } = useQuery({ 
     queryKey: ['search'],
-    queryFn: () => ({
+    queryFn: () => {},
+    enabled: false,
+    initialData: {
       paymentID: '',
       currency: '',
       page: 1,
-    }),
+    },
+    staleTime: Infinity,
   })
 
   const setSearchValue = (key: string, value: string) => {

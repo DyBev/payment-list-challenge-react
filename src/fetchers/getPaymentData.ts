@@ -3,15 +3,15 @@ import { API_URL } from "../constants";
 type PaymentDataQueryParams = {
   paymentID?: string,
   currency?: string | '',
-  page?: number
-  pageSize?: number
+  page?: string
+  pageSize?: string
 }
 
 export const getPaymentData = ({
   paymentID = '',
   currency = '',
-  page = 1,
-  pageSize = 5,
+  page = '1',
+  pageSize = '5',
 }: PaymentDataQueryParams = {}) => async () => {
   const params = new URLSearchParams({
     search: paymentID,

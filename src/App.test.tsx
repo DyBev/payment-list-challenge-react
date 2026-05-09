@@ -9,7 +9,7 @@ import {
   test,
 } from "vitest";
 import { server } from "./mocks/node";
-import App from "./App";
+import App, { queryClient } from "./App";
 import { I18N } from "./constants/i18n";
 import { format } from 'date-fns';
 
@@ -68,7 +68,10 @@ export const getSearchInput = () => {
 
 beforeAll(() => server.listen());
 afterAll(() => server.close());
-afterEach(() => server.resetHandlers());
+afterEach(() => {
+  queryClient.resetQueries();
+  server.resetHandlers();
+});
 
 describe("App - Step 1: Basic Payment List", () => {
   test("should fetch and display payments in a table with page=1 and pageSize=5", async () => {
@@ -262,6 +265,7 @@ describe("App - Step 8: Pagination", () => {
     await waitFor(() => {
       expect(screen.getByRole("table")).toBeInTheDocument();
       expect(screen.getAllByRole("cell").length).toBeGreaterThan(0);
+      expect(screen.getByRole("button", { name: I18N.PREVIOUS_BUTTON })).toBeInTheDocument();
     });
 
     // Check for pagination buttons
