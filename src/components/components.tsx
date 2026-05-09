@@ -24,7 +24,7 @@ export const FlexColumn = styled.div`
 export const FlexRow = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.25rem;
   margin-bottom: 1.5rem;
 
   @media (min-width: 768px) {

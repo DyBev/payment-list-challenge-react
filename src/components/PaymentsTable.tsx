@@ -37,6 +37,23 @@ export const PaymentsTable = () => {
     total,
   } = data as PaymentSearchResponse || {} ;
 
+  const totalPages = Math.ceil(total/pageSize)
+  let startIndex = Math.max(0, page - 6);
+  let endIndex = page + 4;
+  if (page - 6 < 0) {
+    endIndex += Math.abs(page - 6);
+    if (page == 1) {
+      endIndex += 1;
+    }
+  }
+
+  if (page + 4 > totalPages - 1) {
+    startIndex -= Math.abs(page + 6 - totalPages);
+    if (page == totalPages - 1) {
+      startIndex -= 1;
+    }
+  }
+
   return (
     <ErrorHandling error={error} >
     {data && (
@@ -82,19 +99,33 @@ export const PaymentsTable = () => {
             <PaginationButton disabled={page === 1} onClick={() => setSearchValue('page', String(page - 1))}>
               {I18N.PREVIOUS_BUTTON}
             </PaginationButton>
-            {Array(Math.ceil(total/pageSize)).fill(0).map((_, index) => {
-              return <PaginationButton
-                style={{...(page === index+1) ? {
-                  backgroundColor: '#7f8ca8',
-                }: {}}}
-                key={index}
-                onClick={() => setSearchValue('page', String(index+1))}
-              >
-                {index+1}
-              </PaginationButton>
-            })}
+            <FlexRow style={{ width: 'fit-content', marginBottom: 0 }}>
+              {Array(totalPages).fill(0).map((_, index) => {
+                if (
+                  index === 0
+                  || index === totalPages-1
+                  || index > startIndex && index < endIndex
+                ) {
+                  return <PaginationButton
+                    style={{...(page === index+1) ? {
+                      backgroundColor: '#7f8ca8',
+                    }: {}}}
+                    key={index}
+                    onClick={() => setSearchValue('page', String(index+1))}
+                  >
+                    {index+1}
+                  </PaginationButton>
+                }
+                if (
+                  index === endIndex
+                  || index === startIndex
+                ) {
+                  return <span style={{ marginLeft: 0 }}>...</span>
+                }
+              })}
+            </FlexRow>
             <PaginationButton 
-              disabled={page === Math.ceil(total/pageSize)}
+              disabled={page === totalPages}
               onClick={() => setSearchValue('page', String(page + 1))}
             >
               {I18N.NEXT_BUTTON}
