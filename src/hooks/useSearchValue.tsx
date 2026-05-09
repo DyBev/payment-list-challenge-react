@@ -27,7 +27,9 @@ export const useSearchValue = () => {
     );
   }
 
-  const isClear = Object.values(data || {}).reduce((acc, value) => (acc && value === ''), true)
+  const isClear = Object.entries(data || {})
+    .filter(([key,]) => key !== 'page')
+    .reduce((acc, [,value]) => (acc && value === ''), true)
 
   return {
     data,
