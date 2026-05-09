@@ -6,6 +6,7 @@ import { PaymentsTable } from './PaymentsTable';
 import { afterEach } from 'node:test';
 import { server } from '../mocks/node';
 import { I18N } from '../constants/i18n';
+import { PaymentSearchResponse } from '../types/payment';
 
 beforeAll(() => server.listen());
 afterAll(() => server.close());
@@ -48,7 +49,7 @@ describe('PaymentsTable', () => {
       expect(data).toBeDefined();
     });
 
-    const data = queryClient.getQueryData(['payments', ...Object.values({
+    const data = queryClient.getQueryData<PaymentSearchResponse>(['payments', ...Object.values({
       paymentID: '',
       currency: '',
       page: '2',

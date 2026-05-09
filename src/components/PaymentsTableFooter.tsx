@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   FlexRow,
   PaginationButton,
@@ -6,41 +5,48 @@ import {
 } from './components';
 import { I18N } from '../constants/i18n';
 import { usePayments } from '../hooks/usePayments';
-import { PaymentSearchResponse } from '../types/payment';
 import { useSearchValue } from '../hooks/useSearchValue';
 
 export const PaymentsTableFooter = () => {
   const { setSearchValue } = useSearchValue();
   const { data } = usePayments()
 
+  if (!data) {
+    return null;
+  }
+
   const {
     page,
     pageSize,
     total,
-  } = data as PaymentSearchResponse || {} ;
+  } = data;
 
   const deviceWidth = window.innerWidth;
-  const totalPages = Math.ceil(total/pageSize)
+  const totalPages = pageSize > 0 ? Math.ceil(total / pageSize) : 0;
 
-  const startAdjustment = 6
-  const endAdjustment = 4
+  if (total <= pageSize) {
+    return null;
+  }
+
+  const startAdjustment = 6;
+  const endAdjustment = 4;
   let startIndex = Math.max(0, page - startAdjustment);
   let endIndex = page + endAdjustment;
   if (page - startAdjustment < 0) {
     endIndex += Math.abs(page - startAdjustment);
-    if (page == 1) {
+    if (page === 1) {
       endIndex += 1;
     }
   }
 
   if (page + endAdjustment > totalPages - 1) {
     startIndex -= Math.abs(page + endAdjustment - totalPages);
-    if (page == totalPages - 1) {
+    if (page === totalPages - 1) {
       startIndex -= 1;
     }
   }
 
-  return total > pageSize && (
+  return (
     <PaginationRow>
       <PaginationButton disabled={page === 1} onClick={() => setSearchValue('page', String(page - 1))}>
         {I18N.PREVIOUS_BUTTON}

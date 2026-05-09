@@ -1,4 +1,10 @@
 import { API_URL } from "../constants";
+import { PaymentSearchResponse } from "../types/payment";
+
+interface FetchError {
+  status: number;
+  message: string;
+}
 
 type PaymentDataQueryParams = {
   paymentID?: string,
@@ -12,7 +18,7 @@ export const getPaymentData = ({
   currency = '',
   page = '1',
   pageSize = '5',
-}: PaymentDataQueryParams = {}) => async () => {
+}: PaymentDataQueryParams = {}) => async (): Promise<PaymentSearchResponse> => {
   const params = new URLSearchParams({
     search: paymentID,
     currency,
@@ -24,10 +30,14 @@ export const getPaymentData = ({
     method: 'GET',
   })
 
-  const data = await response.json()
+  const data: unknown = await response.json()
   if (response.ok) {
-    return data;
+    return data as PaymentSearchResponse;
   } else {
-    return Promise.reject({ status: response.status, message: data.message })
+    const error: FetchError = {
+      status: response.status,
+      message: (data as Record<string, unknown>)?.message as string || 'Unknown error'
+    };
+    return Promise.reject(error);
   }
 };

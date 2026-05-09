@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   FlexRow,
   Spinner,
@@ -27,9 +26,7 @@ export const PaymentsTable = () => {
     );
   }
 
-  const {
-    payments,
-  } = data as PaymentSearchResponse || {} ;
+  const payments = data?.payments || [];
 
   return (
     <ErrorHandling error={error} >

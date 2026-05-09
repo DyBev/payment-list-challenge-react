@@ -1,32 +1,42 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
+interface SearchData {
+  paymentID: string;
+  currency: string;
+  page: string;
+}
+
 export const useSearchValue = () => {
   const queryClient = useQueryClient();
-  const { data } = useQuery({ 
+  const { data } = useQuery<SearchData>({ 
     queryKey: ['search'],
-    queryFn: () => {},
+    queryFn: () => ({
+      paymentID: '',
+      currency: '',
+      page: '1',
+    }),
     enabled: false,
     initialData: {
       paymentID: '',
       currency: '',
-      page: 1,
+      page: '1',
     },
     staleTime: Infinity,
   })
 
   const setSearchValue = (key: string, value: string) => {
-    queryClient.setQueryData(['search'], (oldData: Record<string, string>) => ({
-      ...oldData,
+    queryClient.setQueryData<SearchData>(['search'], (oldData) => ({
+      ...oldData || { paymentID: '', currency: '', page: '1' },
       [key]: value
     }))
   };
 
   const clearSearch = () => {
-    queryClient.setQueryData(['search'], (oldData: Record<string, string>) => 
-      Object.keys(oldData).reduce((acc, key) => ({
+    queryClient.setQueryData<SearchData>(['search'], (oldData) => 
+      Object.keys(oldData || {}).reduce((acc, key) => ({
         ...acc,
         [key]: '',
-      }), {})
+      }), {}) as SearchData
     );
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DefaultButton, FilterRow, SearchButton, SearchInput, Select, Title, FlexColumn } from './components';
 import { I18N } from "../constants/i18n";
 import { useSearchValue } from '../hooks/useSearchValue';

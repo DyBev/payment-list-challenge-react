@@ -1,5 +1,5 @@
 export type Currency = "USD" | "EUR" | "GBP" | "AUD" | "CAD" | "ZAR" | "JPY" | "CZK";
-type Status = "completed" | "pending" | "failed" | "refunded";
+export type Status = "completed" | "pending" | "failed" | "refunded";
 
 export interface Payment {
     id: string,
