@@ -7,6 +7,7 @@ export const useSearchValue = () => {
     queryFn: () => ({
       paymentID: '',
       currency: '',
+      page: 1,
     }),
   })
 

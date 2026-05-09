@@ -72,6 +72,8 @@ afterEach(() => server.resetHandlers());
 
 describe("App - Step 1: Basic Payment List", () => {
   test("should fetch and display payments in a table with page=1 and pageSize=5", async () => {
+    render(<App />);
+
     // Wait for the table to load with data cells
     await waitFor(() => {
       expect(screen.getByRole("table")).toBeInTheDocument();
@@ -176,6 +178,12 @@ describe("App - Step 4: Handle Payment Not Found", () => {
 
 describe("App - Step 5: Handle Server Error", () => {
   test("should display error message when API returns 500", async () => {
+    render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
+
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });
 

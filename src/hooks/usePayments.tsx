@@ -9,6 +9,7 @@ export const usePayments = () => {
     queryFn: getPaymentData({ 
       paymentID: searchData?.paymentID || '',
       currency: searchData?.currency || '',
+      page: searchData?.page || 1,
     }),
   })
 
