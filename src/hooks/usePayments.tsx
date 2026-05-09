@@ -10,7 +10,7 @@ export const usePayments = ({
 }: UsePaymentsParams) => {
   const { status, fetchStatus, data, error } = useQuery({
     queryKey: ['payments', paymentID],
-    queryFn: getPaymentData(),
+    queryFn: getPaymentData({ paymentID }),
   })
 
   if (fetchStatus === 'idle' && status === 'pending') {

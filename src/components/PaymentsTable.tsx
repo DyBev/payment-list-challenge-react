@@ -3,10 +3,12 @@ import { StatusBadge, Table, TableBodyWrapper, TableCell, TableHeader, TableRow,
 import { I18N } from '../constants/i18n';
 import { usePayments } from '../hooks/usePayments';
 import { PaymentSearchResponse } from '../types/payment';
+import { useSearchValue } from '../hooks/useSearchValue';
 
 export const PaymentsTable = () => {
-  const { data, isLoading } = usePayments({ 
-    paymentID: 'mockPaymentId'
+  const { data: searchData } = useSearchValue();
+  const { data, isLoading } = usePayments({
+    paymentID: searchData?.paymentID || '',
   })
 
   if (isLoading) {

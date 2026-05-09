@@ -9,7 +9,7 @@ type PaymentDataQueryParams = {
 }
 
 export const getPaymentData = ({
-  paymentID = 'pay_205',
+  paymentID = '',
   currency = '',
   page = 1,
   pageSize = 5,
