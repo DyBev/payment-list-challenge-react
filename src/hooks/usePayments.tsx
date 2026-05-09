@@ -1,16 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { getPaymentData } from "../fetchers/getPaymentData"
+import { useSearchValue } from "./useSearchValue";
 
-type UsePaymentsParams = {
-  paymentID: string,
-}
-
-export const usePayments = ({
-  paymentID,
-}: UsePaymentsParams) => {
+export const usePayments = () => {
+  const { data: searchData } = useSearchValue();
+  console.log('searchData', searchData, searchData?.paymentID, ['payments', searchData?.paymentID || '']);
   const { status, fetchStatus, data, error } = useQuery({
-    queryKey: ['payments', paymentID],
-    queryFn: getPaymentData({ paymentID }),
+    queryKey: ['payments', searchData?.paymentID || ''],
+    queryFn: getPaymentData({ paymentID: searchData?.paymentID || '' }),
   })
 
   if (fetchStatus === 'idle' && status === 'pending') {
@@ -28,7 +25,8 @@ export const usePayments = ({
   if (status === 'error') {
     return {
       isLoading: false,
-      error: error,
+      error: (error as unknown as { status: number, message: string }),
+
     }
   }
 

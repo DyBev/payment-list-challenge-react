@@ -27,6 +27,7 @@ export const PaymentsHeader = () => {
         />
         <SearchButton
           onClick={() => {
+            console.log('search', searchValue)
             setSearchValue("paymentID", searchValue)
           }}
         >{I18N.SEARCH_BUTTON}</SearchButton>

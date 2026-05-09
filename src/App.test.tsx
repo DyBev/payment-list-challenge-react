@@ -150,6 +150,10 @@ describe("App - Step 4: Handle Payment Not Found", () => {
   test("should display error message when payment ID is not found", async () => {
     render(<App />);
 
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
+
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });
 
@@ -163,6 +167,10 @@ describe("App - Step 4: Handle Payment Not Found", () => {
 describe("App - Step 5: Handle Server Error", () => {
   test("should display error message when API returns 500", async () => {
     render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByText(I18N.PAGE_TITLE)).toBeInTheDocument()
+    })
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", { name: I18N.SEARCH_BUTTON });

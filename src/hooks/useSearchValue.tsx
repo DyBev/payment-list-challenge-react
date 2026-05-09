@@ -4,11 +4,9 @@ export const useSearchValue = () => {
   const queryClient = useQueryClient();
   const { data } = useQuery({ 
     queryKey: ['search'],
-    queryFn: async () => {
-      return {
-        paymentID: '',
-      };
-    }
+    queryFn: () => ({
+      paymentID: '',
+    }),
   })
 
   const setSearchValue = (key: string, value: string) => {
